@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StockPulse — Live Indices, Screener & News</title>
+  <meta name="description" content="StockPulse: a clean, fast stock portal showing live indices, a screener, and market news using embedded widgets.">
+  <link rel="icon" href="favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html{scroll-behavior:smooth}
+    .card{border-radius:1rem; box-shadow:0 10px 25px rgba(0,0,0,.08);}
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#" class="font-extrabold text-xl">Stock<span class="text-blue-600">Pulse</span></a>
+      <nav class="space-x-4 text-sm">
+        <a href="#overview" class="hover:text-blue-600">Overview</a>
+        <a href="#indices" class="hover:text-blue-600">Indices</a>
+        <a href="#screener" class="hover:text-blue-600">Screener</a>
+        <a href="#news" class="hover:text-blue-600">News</a>
+        <a href="#about" class="hover:text-blue-600">About</a>
+      </nav>
+      <div class="text-xs text-slate-500">
+        <span id="asof"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-b from-white to-slate-100">
+    <div class="max-w-7xl mx-auto px-4 py-10 md:py-16 grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">Your lightweight portal for <span class="text-blue-600">live markets</span>.</h1>
+        <p class="mt-4 text-slate-600 text-lg">Track Nifty 50, Sensex, S&amp;P 500, Nasdaq, and more. Screen stocks and scan headlines — all in one page.</p>
+        <div class="mt-6 flex items-center gap-3">
+          <a href="#screener" class="px-5 py-3 rounded-2xl bg-blue-600 text-white font-semibold hover:bg-blue-700">Open Screener</a>
+          <a href="#news" class="px-5 py-3 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-black">Latest News</a>
+        </div>
+      </div>
+      <div class="card bg-white p-3">
+        <!-- TradingView Ticker Tape -->
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+          {
+            "symbols": [
+              {"proName": "BSE:SENSEX", "title": "Sensex"},
+              {"proName": "NSE:NIFTY", "title": "Nifty 50"},
+              {"proName": "NASDAQ:NDX", "title": "Nasdaq 100"},
+              {"proName": "SP:SPX", "title": "S&P 500"},
+              {"proName": "DJ:DJI", "title": "Dow Jones"},
+              {"proName": "NSE:BANKNIFTY", "title": "Bank Nifty"},
+              {"proName": "NASDAQ:NVDA", "title": "Nvidia"},
+              {"proName": "NSE:RELIANCE", "title": "Reliance"}
+            ],
+            "showSymbolLogo": true,
+            "isTransparent": false,
+            "displayMode": "adaptive",
+            "colorTheme": "light",
+            "locale": "en"
+          }
+          </script>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Market Overview -->
+  <section id="overview" class="py-10">
+    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-6">
+      <div class="md:col-span-2 card bg-white p-4">
+        <h2 class="text-xl font-bold mb-3">Market Overview</h2>
+        <div class="tradingview-widget-container" style="height:560px">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+          {
+            "colorTheme": "light",
+            "dateRange": "12M",
+            "showChart": true,
+            "locale": "en",
+            "width": "100%",
+            "height": "540",
+            "showSymbolLogo": true,
+            "tabs": [
+              {
+                "title": "India",
+                "symbols": [
+                  {"s": "NSE:NIFTY"},
+                  {"s": "BSE:SENSEX"},
+                  {"s": "NSE:BANKNIFTY"},
+                  {"s": "NSE:RELIANCE"},
+                  {"s": "NSE:TCS"},
+                  {"s": "NSE:HDFCBANK"}
+                ]
+              },
+              {
+                "title": "US",
+                "symbols": [
+                  {"s": "SP:SPX", "d": "S&P 500"},
+                  {"s": "NASDAQ:COMP", "d": "Nasdaq Composite"},
+                  {"s": "DJ:DJI", "d": "Dow Jones"},
+                  {"s": "NASDAQ:NDX", "d": "Nasdaq 100"},
+                  {"s": "NASDAQ:NVDA", "d": "Nvidia"},
+                  {"s": "NASDAQ:AAPL", "d": "Apple"}
+                ]
+              }
+            ]
+          }
+          </script>
+        </div>
+      </div>
+      <div class="card bg-white p-4">
+        <h2 class="text-xl font-bold mb-3">Heatmap</h2>
+        <div class="tradingview-widget-container" style="height:540px">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+          {
+            "exchanges": ["BSE", "NSE", "NYSE", "NASDAQ"],
+            "dataSource": "S&P500",
+            "blockSize": "market_cap_basic",
+            "blockColor": "change",
+            "locale": "en",
+            "colorTheme": "light",
+            "isTransparent": false,
+            "width": "100%",
+            "height": "520"
+          }
+          </script>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Indices Cards -->
+  <section id="indices" class="py-10 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-2xl font-extrabold mb-6">Key Indices</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="card bg-white p-4">
+          <h3 class="font-bold mb-2">Nifty 50</h3>
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+            {
+              "symbol": "NSE:NIFTY",
+              "locale": "en",
+              "dateRange": "12M",
+              "colorTheme": "light",
+              "isTransparent": false,
+              "autosize": true
+            }
+            </script>
+          </div>
+        </div>
+        <div class="card bg-white p-4">
+          <h3 class="font-bold mb-2">Sensex</h3>
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+            {
+              "symbol": "BSE:SENSEX",
+              "locale": "en",
+              "dateRange": "12M",
+              "colorTheme": "light",
+              "isTransparent": false,
+              "autosize": true
+            }
+            </script>
+          </div>
+        </div>
+        <div class="card bg-white p-4">
+          <h3 class="font-bold mb-2">S&amp;P 500</h3>
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+            {
+              "symbol": "SP:SPX",
+              "locale": "en",
+              "dateRange": "12M",
+              "colorTheme": "light",
+              "isTransparent": false,
+              "autosize": true
+            }
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screener -->
+  <section id="screener" class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-2xl font-extrabold mb-6">Stock Screener</h2>
+      <div class="card bg-white p-4">
+        <div class="tradingview-widget-container" style="height:600px;">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+          {
+            "width": "100%",
+            "height": "560",
+            "defaultColumn": "overview",
+            "defaultScreen": "general",
+            "market": "india",
+            "showToolbar": true,
+            "colorTheme": "light",
+            "locale": "en"
+          }
+          </script>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news" class="py-10 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-2xl font-extrabold mb-6">Market News</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="card bg-white p-4">
+          <h3 class="font-bold mb-3">Top Headlines</h3>
+          <div class="tradingview-widget-container" style="height:600px;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+            {
+              "feedMode": "market",
+              "market": "india",
+              "isTransparent": false,
+              "displayMode": "regular",
+              "width": "100%",
+              "height": "560",
+              "colorTheme": "light",
+              "locale": "en"
+            }
+            </script>
+          </div>
+        </div>
+        <div class="card bg-white p-4">
+          <h3 class="font-bold mb-3">Global Headlines</h3>
+          <div class="tradingview-widget-container" style="height:600px;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+            {
+              "feedMode": "all_symbols",
+              "isTransparent": false,
+              "displayMode": "regular",
+              "width": "100%",
+              "height": "560",
+              "colorTheme": "light",
+              "locale": "en"
+            }
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-12">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="card bg-white p-6">
+        <h2 class="text-2xl font-extrabold mb-3">About StockPulse</h2>
+        <p class="text-slate-700 leading-relaxed">
+          StockPulse is a lightweight, single-page business website for stocks. It embeds reliable, real-time market widgets so you
+          can view indices, screeners and news without maintaining servers or API keys. Deploy it to GitHub Pages, Netlify or any static host.
+        </p>
+        <p class="text-slate-600 mt-3 text-sm">
+          Data and charts provided by TradingView widgets. This page stores no personal data.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-sm text-slate-500 flex flex-col md:flex-row items-center justify-between">
+      <span>&copy; <span id="yr"></span> StockPulse</span>
+      <a href="mailto:hello@example.com" class="hover:text-blue-600">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // Update timestamps
+    (function(){
+      const now = new Date();
+      document.getElementById('yr').textContent = now.getFullYear();
+      const fmt = new Intl.DateTimeFormat('en-IN', { dateStyle:'medium', timeStyle:'short', timeZone: 'Asia/Kolkata'}).format(now);
+      document.getElementById('asof').textContent = 'As of ' + fmt + ' IST';
+    })();
+  </script>
+</body>
+</html>
